@@ -1,0 +1,49 @@
+{% extends 'main/dashboard.html' %}
+{% block content %}
+<div style="margin: 95px 130px 50px 300px">
+     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+        Assign
+      </button>
+<div class="">   
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+    aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog" role="document">
+       <div class="modal-content">
+           <div class="modal-header">
+               <h5 class="modal-title" id="exampleModalLabel">AssignTo</h5>
+               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                   <span aria-hidden="true">&times;</span>
+               </button>
+           </div>
+           <div class="modal-body">
+               <form method="post">
+                   {% csrf_token %}
+                   <table width="100%">
+                       <tr>
+                           <th>Assign To:</th>
+                           <td>
+                               <select name="Assign" class="form-control" required>
+                                   <option value="">Select Team</option>
+                                   {% for i in teams %}
+                                   <option value="{{i.id}}">{{i.teamName}} [{{i.teamLeaderName}}]</option>
+                                   {% endfor %}
+                               </select>
+                           </td>
+                       </tr>
+                   </table>
+                   <div class="modal-footer">
+                       <button type="submit" name="submit" class="btn btn-primary">Submit
+                       </button>
+                   </div>
+               </form>
+           </div>
+       </div>
+       
+        
+    
+         
+    
+       
+{% endblock content %}
+
+

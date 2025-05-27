@@ -1,0 +1,238 @@
+{% extends 'main/dashboard.html' %}
+{% load static %}
+{% block content %}
+<div class="card bg-grey mb-3" style="margin: 95px 90px 30px 300px">
+    <div class="card-header">View request</div>
+    <div class="card-body">
+      <div>
+        <table class="table">
+       <tr>
+        <th>Name</th>
+        <th>Mobile</th>
+        <th>Location</th>
+        <th>Message</th>
+        <th>Reporting Time</th>
+       </tr>
+        <tr>
+          <td>{{form.name}}</td>
+          <td>{{form.mobile}}</td>
+          <td>{{form.location}}</td>
+          <td>{{form.message}}</td>
+          <td>{{form.Postingdate}}</td>
+        </tr>
+         <tr>
+        <th>Image</th>
+        <td>
+            {% if form.image %}
+                <img src="{{ form.image.url }}" alt="Incident Image" style="max-width: 300px; max-height: 300px;">
+            {% else %}
+                Walay Image.
+            {% endif %}
+        </td>
+    </tr>
+      </table>
+      </div>
+    </div>
+</div>
+
+<div class="card bg-light mb-3" style="margin: 55px 90px 0px 300px">
+  <div class="card-header">Team Assigned</div>
+  <div class="card-body">
+
+    {% if form.AssignTo == null %}
+       
+       <h4>Not assigned as yet</h4>
+       {% if not form.AssignTo %}
+       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+        Assign
+      </button>
+
+      {% endif %}
+
+    {% else %}
+      <div class="col-12">
+        <table id="example1" class="table table-bordered table-striped">
+            <tr>
+                <th style="text-align: center; color: red;" colspan="2">Assigned Details</th>
+            </tr>
+
+            <tr>
+                <th>Team Name</th>
+                <td>{{form.AssignTo.team_name}}</td>
+            </tr>
+            <tr>
+                <th>Team Leader Name</th>
+                <td>{{form.AssignTo.team_lead}}</td>
+            </tr>
+            <tr>
+                <th>TL Mobile No.</th>
+                <td>{{form.AssignTo.lead_number}}</td>
+            </tr>
+            <tr>
+                <th>Team Members</th>
+                <td>{{form.AssignTo.team_member}}</td>
+            </tr>
+            <tr>
+              <th>Assigned Time</th>
+              <td>{{form.AssignTo.postingDate}}</td>
+          </tr>
+           
+        </table>
+      
+    </div>
+      {% endif %}
+
+
+
+      <div class="">   
+       
+        
+        The Modal -->
+        <div class="modal" id="myModal">
+          <div class="modal-dialog">
+            <div class="modal-content">
+        
+              Modal Header -->
+              <div class="modal-header">
+                <h4 class="modal-title">Assign Team</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+              </div>
+        
+              Modal body -->
+              <div class="modal-body">
+                <div class="modal-body">
+                  <form method="post">
+                      {% csrf_token %}
+                      <table width="100%">
+                          <tr>
+                              <th>Assign To:</th>
+                              <td>
+                                  <select name="Assign" class="form-control" required>
+                                      <option value="">Select Team</option>
+                                      {% for i in teams %}
+                                      <option value="{{i.id}}">{{i.team_name}} [{{i.team_lead}}]</option>
+                                      {% endfor %}
+                                  </select>
+                              </td>
+                          </tr>
+                      </table>
+                      <div class="modal-footer">
+                          <button type="submit" name="submit" class="btn btn-primary">Submit
+                          </button>
+                      </div>
+                  </form>
+              </div>
+              </div>
+        
+             
+        
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+<div class="part3">
+  <div class="card bg-light mb-3" style="margin: 55px 90px 0px 300px">
+    <div class="card-header">Tracking History</div>
+    <div class="card-body">
+    
+      
+      {% if count != 0 %}
+      <table id="example1" class="table table-bordered table-striped">
+          <tr align="center" style="color: red;">
+              <th colspan="4">Request Track History</th>
+          </tr>
+          <tr>
+              <th>Remark</th>
+              <th>Status</th>
+              <th>Remark Date</th>
+          </tr>
+          {% for i in report %}
+          <tr>
+              <td>{{i.remark}}</td>
+              <td>{{i.status}}</td>
+              <td>{{i.PostingDate}}</td>
+          </tr>
+          {% endfor %}
+      </table>
+      {% endif %}
+      {% if  count == 0  %}
+      <h4>No tracking history found</h4>
+      {% endif %}
+      {% if not form.AssignTo %}
+      {% elif form.status != "Request Completed" %}
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal1">
+        Action
+      </button>
+  {% endif %}
+  
+     
+      
+    </div>
+  </div>
+</div>
+
+
+<div class="another model">
+  
+  <div class="">   
+       
+        
+    <div class="modal" id="myModal1">
+      <div class="modal-dialog">
+        <div class="modal-content">
+    
+          <div class="modal-header">
+            <h4 class="modal-title">Take Action</h4>
+            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+          </div>
+    
+          <div class="modal-body">
+            <div class="modal-body">
+              <form method="post">
+                {% csrf_token %}
+                <table width="100%">
+                    <tr>
+                        <th>Status :</th>
+                        <td>
+                            <select name="status" class="form-control" required>
+                            <option value="">Select Action</option>
+                                {% if form.status == "Assigned" %}
+                                <option value="Team On the Way">Team On the Way</option>
+                                <option value="Fire Relief Work in Progress">Incident in Progress</option>
+                                <option value="Request Completed">Request Completed</option>
+                                {% elif form.status == "Team On the Way" %}
+                                <option value="Fire Relief Work in Progress">Incident in Progress</option>
+                                <option value="Request Completed">Request Completed</option>
+                                {% elif form.status == "Fire Relief Work in Progress" %}
+                                <option value="Request Completed">Request Completed</option>
+                                {% endif %}
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>Remark :</th>
+                        <td><textarea name="remark" class="form-control" maxlength="500" rows="5" required></textarea></td>
+                    </tr>
+                </table>
+                <div class="modal-footer">
+                    <button type="submit" name="submit" class="btn btn-primary">Submit
+                    </button>
+                </div>
+            </form>
+          </div>
+          </div>
+    
+         
+    
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock %}
+
+

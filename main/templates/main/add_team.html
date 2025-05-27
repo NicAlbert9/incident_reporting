@@ -1,0 +1,67 @@
+{% extends "main/dashboard.html" %}
+
+{% block extra_head %}
+<style>
+    body {
+    background: linear-gradient(to right, #f8f9fa,rgb(63, 127, 190),rgb(69, 69, 180));
+    min-height: 100vh;
+    padding: 0;
+    margin: 0;
+  }
+
+  .form-wrapper {
+    max-width: 600px;
+    margin: 95px auto 50px 300px;
+  }
+
+  .card.bg-dark {
+    background-color: rgba(33, 37, 41, 0.95) !important;
+    border-radius: 1rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  }
+
+  .card-header {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #fff;
+    background-color: #dc3545;
+    border-radius: 1rem 1rem 0 0;
+    text-align: center;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 20px;
+  }
+
+  .form-actions .btn {
+    min-width: 100px;
+  }
+</style>
+{% endblock extra_head %}
+
+{% block content %}
+<div class="form-wrapper" "card bg-primary w-500px" style="margin: 150px 130px 50px 300px">
+  <div class="card bg-dark text-light">
+    <div class="card-header">
+      <i class="bi bi-person-plus-fill me-2"></i>Add Team
+    </div>
+    <div class="card-body">
+      <form method="POST" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary">
+            <i class="bi bi-check-circle me-1"></i> Add
+          </button>
+          <a href="{% url 'view-team' %}" class="btn btn-outline-light">
+            <i class="bi bi-arrow-left-circle me-1"></i> Back
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

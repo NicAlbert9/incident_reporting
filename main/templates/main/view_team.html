@@ -1,0 +1,53 @@
+{% extends "main/dashboard.html" %}
+{% block content %}
+<div class="form-wrapper card bg-light w-500px" style="margin: 95px 130px 50px 300px;">
+    <div class="card bg-primary text-light shadow-lg rounded-4">
+        <div class="card-header bg-gradient text-white" style="background: linear-gradient(90deg, #007BFF, #00BFFF);">
+            <h4 class="mb-0"><i class="bi bi-people-fill me-2"></i>View Team</h4>
+        </div>
+        <div class="card-body bg-light text-dark rounded-bottom px-4 py-3">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered align-middle text-center shadow-sm rounded">
+                    <thead class="table-primary text-dark">
+                        <tr>
+                            <th>Team Name</th>
+                            <th>Team Lead</th>
+                            <th>Lead Number</th>
+                            <th>Team Member</th>
+                            <th>Registration Date</th>
+                            <th colspan="2">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for fm in form %}
+                        <tr>
+                            <td class="fw-semibold">{{ fm.team_name }}</td>
+                            <td>{{ fm.team_lead }}</td>
+                            <td>{{ fm.lead_number }}</td>
+                            <td>{{ fm.team_member }}</td>
+                            <td>{{ fm.postingDate }}</td>
+                            <td>
+                                <a href="{% url 'edit-team' fm.id %}" class="btn btn-sm btn-outline-info w-100 fw-bold">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'delete-team' fm.id %}" class="btn btn-sm btn-outline-danger w-100 fw-bold">
+                                    <i class="bi bi-trash-fill"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="7" class="text-muted fst-italic">No teams found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+{% endblock %}

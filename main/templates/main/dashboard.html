@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap.min.css' %} "/>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css"
+    />
+    
+    <link rel="stylesheet" href="{% static 'main/css/dataTables.bootstrap5.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'main/css/style.css' %}"/>
+    <title>Admin Dashboard</title>
+    <link rel="icon" type="image/png" href="{% static 'main/images/icon.png' %}">
+    <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: url("{% static 'main/images/img7.jpg' %}") no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+    }
+      .bg-blur {
+  background: rgba(59, 130, 246, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.bg-blur:hover {
+  transform: translateY(-6px) scale(1);
+  box-shadow: 0 12px 24px rgba(59, 130, 246, 0.4);
+}
+
+.transition {
+  transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+  background-color: #fff;
+  color: #3B82F6;
+  border-color: #fff;
+}
+/* Shared glassmorphism + hover */
+.bg-blur-yellow {
+  background: rgba(251, 191, 36, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.bg-blur-green {
+  background: rgba(16, 185, 129, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.bg-blur-red {
+  background: rgba(239, 68, 68, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.bg-blur-cyan {
+  background: rgba(20, 184, 166, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.bg-blur-indigo {
+  background: rgba(99, 102, 241, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.bg-blur-yellow:hover,
+.bg-blur-green:hover,
+.bg-blur-red:hover,
+.bg-blur-cyan:hover,
+.bg-blur-indigo:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+}
+
+.transition {
+  transition: all 0.3s ease;
+}
+
+.btn-outline-light:hover {
+  background-color: #fff !important;
+  color: #000 !important;
+  border-color: #fff;
+}
+
+    </style>
+  <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top shadow">
+  <div class="container-fluid d-flex justify-content-between align-items-center">
+    <button class="navbar-toggler me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar"
+      aria-controls="sidebar" aria-label="Toggle sidebar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand text-uppercase fw-bold" href="#">Admin Panel</a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#topNavBar"
+      aria-controls="topNavBar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse justify-content-end" id="topNavBar">
+      <ul class="navbar-nav align-items-center">
+        <li class="nav-item">
+          <a href="{% url 'logout' %}" class="btn btn-outline-light ms-2 d-flex align-items-center">
+            <i class="bi bi-box-arrow-right me-1"></i> Logout
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+   <div
+  class="offcanvas offcanvas-start sidebar-nav bg-dark text-white"
+  tabindex="-1"
+  id="sidebar"
+>
+  <div class="offcanvas-body p-0">
+    <nav class="navbar-dark">
+      <ul class="navbar-nav">
+        <li>
+          <div class="text-uppercase fw-bold px-3 py-2 border-bottom border-secondary">
+            <small class="text-secondary">Core</small>
+          </div>
+        </li>
+        <li>
+          <a href="{% url 'dashboard' %}" class="nav-link px-3 py-2 d-flex align-items-center active">
+            <i class="bi bi-speedometer2 me-2"></i> Dashboard
+          </a>
+        </li>
+
+        <li class="my-2">
+          <hr class="dropdown-divider bg-secondary" />
+        </li>
+
+        <li>
+          <div class="text-uppercase fw-bold px-3 py-2 border-bottom border-secondary">
+            <small class="text-secondary">Interface</small>
+          </div>
+        </li>
+
+        <li>
+          <a class="nav-link px-3 py-2 sidebar-link d-flex justify-content-between align-items-center"
+             data-bs-toggle="collapse" href="#layouts">
+            <span><i class="bi bi-people-fill me-2"></i> Informants Team</span>
+            <i class="bi bi-chevron-down small"></i>
+          </a>
+          <div class="collapse" id="layouts">
+            <ul class="navbar-nav ps-4">
+              <li>
+                <a href="{% url 'add-team' %}" class="nav-link px-3 py-1">
+                  ➕ Add Team
+                </a>
+              </li>
+              <li>
+                <a href="{% url 'view-team' %}" class="nav-link px-3 py-1">
+                  🛠️ Manage Team
+                </a>
+              </li>
+            </ul>
+          </div>
+        </li>
+
+        <li>
+          <a class="nav-link px-3 py-2 sidebar-link d-flex justify-content-between align-items-center"
+             data-bs-toggle="collapse" href="#layout">
+            <span><i class="bi bi-exclamation-triangle-fill me-2"></i> Report Alerts</span>
+            <i class="bi bi-chevron-down small"></i>
+          </a>
+          <div class="collapse" id="layout">
+            <ul class="navbar-nav ps-4">
+              <li><a href="{% url 'new-request' %}" class="nav-link px-3 py-1">🆕 New Reports</a></li>
+              <li><a href="{% url 'assign-request' %}" class="nav-link px-3 py-1">📌 Assign Reports</a></li>
+              <li><a href="{% url 'team-way' %}" class="nav-link px-3 py-1">🚒 Team on the Way</a></li>
+              <li><a href="{% url 'work-progress' %}" class="nav-link px-3 py-1">⏳ Work in Progress</a></li>
+              <li><a href="{% url 'request-complete' %}" class="nav-link px-3 py-1">✅ Completed Reports</a></li>
+              <li><a href="{% url 'all-request' %}" class="nav-link px-3 py-1">📄 All Reports</a></li>
+            </ul>
+          </div>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+{% block content %}
+<main class="mt-5 pt-3">
+  <div class="container-fluid">
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <h4 class="fw-bold text-light">Dashboard</h4>
+      </div>
+    </div>
+
+    <div class="row g-3">
+<div class="col-md-4">
+  <div class="card h-100 text-white border-0 shadow-lg rounded-4 position-relative bg-blur"
+       style="background: rgba(59, 130, 246, 0.85); backdrop-filter: blur(10px); transition: all 0.3s ease;">
+    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center py-5">
+      <h1 class="display-3 fw-bold mb-2">{{ totalnew }}</h1>
+      <p class="fs-5 fw-semibold mb-0">New Reports</p>
+    </div>
+    <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center px-4 pb-4">
+      <a href="{% url 'new-request' %}" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold shadow-sm transition">
+        View
+      </a>
+      <i class="fas fa-arrow-right fa-xl text-white transition"></i>
+    </div>
+  </div>
+</div>
+
+
+<div class="col-md-4">
+  <div class="card h-100 text-white border-0 shadow-lg rounded-4 position-relative bg-blur-yellow">
+    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center py-5">
+      <h1 class="display-3 fw-bold mb-2">{{ totalfire }}</h1>
+      <p class="fs-5 fw-semibold mb-0">Total Reports</p>
+    </div>
+    <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center px-4 pb-4">
+      <a href="{% url 'all-request' %}" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold shadow-sm transition">
+        View
+      </a>
+      <i class="fas fa-arrow-right fa-xl text-dark transition"></i>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card h-10 text-white border-0 shadow-lg rounded-4 position-relative bg-blur-green">
+    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center py-5">
+      <h1 class="display-3 fw-bold mb-2">{{ completerequest }}</h1>
+      <p class="fs-5 fw-semibold mb-0">Reports Complete</p>
+    </div>
+    <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center px-4 pb-4">
+      <a href="{% url 'request-complete' %}" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold shadow-sm transition">
+        View
+      </a>
+      <i class="fas fa-check-circle fa-xl text-white transition"></i>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card h-100 text-white border-0 shadow-lg rounded-4 position-relative bg-blur-red">
+    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center py-5">
+      <h1 class="display-3 fw-bold mb-2">{{ assign }}</h1>
+      <p class="fs-5 fw-semibold mb-0">Assigned Reports</p>
+    </div>
+    <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center px-4 pb-4">
+      <a href="{% url 'assign-request' %}" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold shadow-sm transition">
+        View
+      </a>
+      <i class="fas fa-user-check fa-xl text-white transition"></i>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card h-100 text-white border-0 shadow-lg rounded-4 position-relative bg-blur-cyan">
+    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center py-5">
+      <h1 class="display-3 fw-bold mb-2">{{ onway }}</h1>
+      <p class="fs-5 fw-semibold mb-0">Team On The Way</p>
+    </div>
+    <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center px-4 pb-4">
+      <a href="{% url 'team-way' %}" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold shadow-sm transition">
+        View
+      </a>
+      <i class="fas fa-truck fa-xl text-white transition"></i>
+    </div>
+  </div>
+</div>
+
+<div class="col-md-4">
+  <div class="card h-100 text-white border-0 shadow-lg rounded-4 position-relative bg-blur-indigo">
+    <div class="card-body d-flex flex-column justify-content-center align-items-center text-center py-5">
+      <h1 class="display-3 fw-bold mb-2">{{ workprogress }}</h1>
+      <p class="fs-5 fw-semibold mb-0">Reports In Progress</p>
+    </div>
+    <div class="card-footer bg-transparent border-0 d-flex justify-content-between align-items-center px-4 pb-4">
+      <a href="{% url 'work-progress' %}" class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold shadow-sm transition">
+        View
+      </a>
+      <i class="fas fa-spinner fa-xl text-white transition"></i>
+    </div>
+  </div>
+</div>
+
+    </div>
+  </div>
+</main>
+{% endblock content %}
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.2/dist/chart.min.js"></script>
+    <script src="{% static 'main/js/jquery.dataTables.min.js' %}"></script>
+    <script src="{% static 'main/js/dataTables.bootstrap5.min.js' %}"></script>
+    <script src="{% static 'main/js/script.js' %}"></script>
+    <script src="{% static 'main/js/jquery-3.5.1.js' %}"></script>
+    <script src="{% static 'main/js/bootstrap.bundle.min.js' %}"></script>
+
+
+  </body>
+</html>

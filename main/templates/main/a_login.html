@@ -1,0 +1,117 @@
+{% extends 'main/index.html' %}
+{% load static %}
+
+{% block extra_head %}
+<style>
+  body {
+    background: url("{% static 'main/images/img2.jpg' %}") no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    backdrop-filter: blur(4px);
+    padding: 0;
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .login-card {
+    max-width: 420px;
+    margin: 80px auto;
+    padding: 2rem;
+    border-radius: 16px;
+    background-color: rgba(30, 33, 36, 0);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0);
+    color: #f1f1f1;
+    backdrop-filter: saturate(180%) blur(5px);
+  }
+
+  .login-card .card-header {
+    background-color: transparent;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    color: #1E90FF; /* Bright blue title */
+    font-size: 1.25rem;
+    text-align: center;
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+
+  .login-card form label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #cfd8e3;
+    font-weight: 500;
+  }
+
+  .login-card form input[type="text"],
+  .login-card form input[type="password"] {
+    width: 100%;
+    padding: 0.6rem 0.75rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    border: 1px solid rgba(30, 144, 255, 0.3); /* subtle blue border */
+    background-color: rgba(255, 255, 255, 0.22);
+    color: #fff;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+  }
+
+  .login-card form input[type="text"]:focus,
+  .login-card form input[type="password"]:focus {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-color: #1E90FF;
+    outline: none;
+  }
+
+  .login-card form input::placeholder {
+    color: #bbb;
+    font-style: italic;
+  }
+
+  .login-card input[type="submit"] {
+    margin-top: 0.5rem;
+    background-color: #1E90FF;
+    border: none;
+    color: #fff;
+    font-weight: 500;
+    padding: 0.6rem;
+    border-radius: 8px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+  }
+
+  .login-card input[type="submit"]:hover {
+    background-color: #1C86EE;
+  }
+
+  a {
+    color: #4DA8DA;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  a:hover {
+    color: #63b3ed;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 576px) {
+    .login-card {
+      margin: 40px 20px;
+      padding: 1.5rem;
+    }
+  }
+</style>
+{% endblock extra_head %}
+
+{% block body %}
+<div class="container">
+  <div class="card login-card">
+    <div class="card-header">Admin Login</div>
+    <div class="card-body">
+      <form method="POST" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Login" class="btn btn-primary" />
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
